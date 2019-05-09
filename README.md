@@ -7,3 +7,12 @@ $ go test .
 # should fail to build
 ```
 
+Without optimization:
+
+```
+$ make clean
+$ DEBUG=1 make
+# passes
+$ go test .
+# passes
+```
