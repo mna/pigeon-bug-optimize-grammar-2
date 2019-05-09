@@ -6,10 +6,10 @@
   )
 }
 
-Grammar <- ID OptionalID2 { return nil, errors.New("B") }
+Grammar <- OptionalID2 { return nil, errors.New("A") }
 
 // Removing the "?" fixes the bug.
-OptionalID <- ID?  { return nil, errors.New("E") }
+OptionalID <- ID?  { return nil, errors.New("B") }
 
 OptionalID2 <- OptionalID { return nil, errors.New("C") }
 
@@ -17,4 +17,3 @@ OptionalID2 <- OptionalID { return nil, errors.New("C") }
 OptionalID3 <- OptionalID
 
 ID <- "A" !{ return true, nil } { return nil, errors.New("D") }
-

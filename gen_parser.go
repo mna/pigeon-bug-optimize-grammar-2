@@ -25,51 +25,28 @@ var g = &grammar{
 			expr: &actionExpr{
 				pos: position{line: 9, col: 12, offset: 62},
 				run: (*parser).callonGrammar1,
-				expr: &seqExpr{
-					pos: position{line: 9, col: 12, offset: 62},
-					exprs: []interface{}{
-						&actionExpr{
-							pos: position{line: 19, col: 7, offset: 344},
-							run: (*parser).callonGrammar3,
-							expr: &seqExpr{
-								pos: position{line: 19, col: 7, offset: 344},
-								exprs: []interface{}{
-									&litMatcher{
-										pos:        position{line: 19, col: 7, offset: 344},
-										val:        "A",
-										ignoreCase: false,
-									},
-									&notCodeExpr{
-										pos: position{line: 19, col: 11, offset: 348},
-										run: (*parser).callonGrammar6,
-									},
-								},
-							},
-						},
-						&actionExpr{
-							pos: position{line: 14, col: 16, offset: 212},
-							run: (*parser).callonGrammar7,
+				expr: &actionExpr{
+					pos: position{line: 14, col: 16, offset: 209},
+					run: (*parser).callonGrammar2,
+					expr: &actionExpr{
+						pos: position{line: 12, col: 15, offset: 156},
+						run: (*parser).callonGrammar3,
+						expr: &zeroOrOneExpr{
+							pos: position{line: 12, col: 15, offset: 156},
 							expr: &actionExpr{
-								pos: position{line: 12, col: 15, offset: 159},
-								run: (*parser).callonGrammar8,
-								expr: &zeroOrOneExpr{
-									pos: position{line: 12, col: 15, offset: 159},
-									expr: &actionExpr{
-										pos: position{line: 19, col: 7, offset: 344},
-										run: (*parser).callonGrammar10,
-										expr: &seqExpr{
-											pos: position{line: 19, col: 7, offset: 344},
-											exprs: []interface{}{
-												&litMatcher{
-													pos:        position{line: 19, col: 7, offset: 344},
-													val:        "A",
-													ignoreCase: false,
-												},
-												&notCodeExpr{
-													pos: position{line: 19, col: 11, offset: 348},
-													run: (*parser).callonGrammar13,
-												},
-											},
+								pos: position{line: 19, col: 7, offset: 341},
+								run: (*parser).callonGrammar5,
+								expr: &seqExpr{
+									pos: position{line: 19, col: 7, offset: 341},
+									exprs: []interface{}{
+										&litMatcher{
+											pos:        position{line: 19, col: 7, offset: 341},
+											val:        "A",
+											ignoreCase: false,
+										},
+										&notCodeExpr{
+											pos: position{line: 19, col: 11, offset: 345},
+											run: (*parser).callonGrammar8,
 										},
 									},
 								},
@@ -81,26 +58,26 @@ var g = &grammar{
 		},
 		{
 			name: "OptionalID",
-			pos:  position{line: 12, col: 1, offset: 145},
+			pos:  position{line: 12, col: 1, offset: 142},
 			expr: &actionExpr{
-				pos: position{line: 12, col: 15, offset: 159},
+				pos: position{line: 12, col: 15, offset: 156},
 				run: (*parser).callonOptionalID1,
 				expr: &zeroOrOneExpr{
-					pos: position{line: 12, col: 15, offset: 159},
+					pos: position{line: 12, col: 15, offset: 156},
 					expr: &actionExpr{
-						pos: position{line: 19, col: 7, offset: 344},
-						run: (*parser).callonOptionalID10,
+						pos: position{line: 19, col: 7, offset: 341},
+						run: (*parser).callonOptionalID5,
 						expr: &seqExpr{
-							pos: position{line: 19, col: 7, offset: 344},
+							pos: position{line: 19, col: 7, offset: 341},
 							exprs: []interface{}{
 								&litMatcher{
-									pos:        position{line: 19, col: 7, offset: 344},
+									pos:        position{line: 19, col: 7, offset: 341},
 									val:        "A",
 									ignoreCase: false,
 								},
 								&notCodeExpr{
-									pos: position{line: 19, col: 11, offset: 348},
-									run: (*parser).callonOptionalID13,
+									pos: position{line: 19, col: 11, offset: 345},
+									run: (*parser).callonOptionalID8,
 								},
 							},
 						},
@@ -111,18 +88,28 @@ var g = &grammar{
 	},
 }
 
-func (c *current) onGrammar6() (bool, error) {
+func (c *current) onGrammar8() (bool, error) {
 	return true, nil
 }
 
-func (p *parser) callonGrammar6() (bool, error) {
+func (p *parser) callonGrammar8() (bool, error) {
 	stack := p.vstack[len(p.vstack)-1]
 	_ = stack
-	return p.cur.onGrammar6()
+	return p.cur.onGrammar8()
+}
+
+func (c *current) onGrammar5() (interface{}, error) {
+	return nil, errors.New("D")
+}
+
+func (p *parser) callonGrammar5() (interface{}, error) {
+	stack := p.vstack[len(p.vstack)-1]
+	_ = stack
+	return p.cur.onGrammar5()
 }
 
 func (c *current) onGrammar3() (interface{}, error) {
-	return nil, errors.New("D")
+	return nil, errors.New("B")
 }
 
 func (p *parser) callonGrammar3() (interface{}, error) {
@@ -131,48 +118,18 @@ func (p *parser) callonGrammar3() (interface{}, error) {
 	return p.cur.onGrammar3()
 }
 
-func (c *current) onGrammar13() (bool, error) {
-	return true, nil
-}
-
-func (p *parser) callonGrammar13() (bool, error) {
-	stack := p.vstack[len(p.vstack)-1]
-	_ = stack
-	return p.cur.onGrammar13()
-}
-
-func (c *current) onGrammar10() (interface{}, error) {
-	return nil, errors.New("D")
-}
-
-func (p *parser) callonGrammar10() (interface{}, error) {
-	stack := p.vstack[len(p.vstack)-1]
-	_ = stack
-	return p.cur.onGrammar10()
-}
-
-func (c *current) onGrammar8() (interface{}, error) {
-	return nil, errors.New("E")
-}
-
-func (p *parser) callonGrammar8() (interface{}, error) {
-	stack := p.vstack[len(p.vstack)-1]
-	_ = stack
-	return p.cur.onGrammar8()
-}
-
-func (c *current) onGrammar7() (interface{}, error) {
+func (c *current) onGrammar2() (interface{}, error) {
 	return nil, errors.New("C")
 }
 
-func (p *parser) callonGrammar7() (interface{}, error) {
+func (p *parser) callonGrammar2() (interface{}, error) {
 	stack := p.vstack[len(p.vstack)-1]
 	_ = stack
-	return p.cur.onGrammar7()
+	return p.cur.onGrammar2()
 }
 
 func (c *current) onGrammar1() (interface{}, error) {
-	return nil, errors.New("B")
+	return nil, errors.New("A")
 }
 
 func (p *parser) callonGrammar1() (interface{}, error) {
@@ -182,7 +139,7 @@ func (p *parser) callonGrammar1() (interface{}, error) {
 }
 
 func (c *current) onOptionalID1() (interface{}, error) {
-	return nil, errors.New("E")
+	return nil, errors.New("B")
 }
 
 func (p *parser) callonOptionalID1() (interface{}, error) {
